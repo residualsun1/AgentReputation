@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent 信誉评分器</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            background: #334155;
+            border: 1px solid #475569;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .stars {
+            display: flex;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 24px;
+            color: #475569;
+            transition: color 0.2s;
+        }
+
+        .star.active {
+            color: #fbbf24;
+        }
+
+        .review-item {
+            border-bottom: 1px solid #334155;
+            padding: 16px 0;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .review-score {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Agent 评分器</h1>
+            <button id="connectBtn" class="btn">连接钱包</button>
+        </div>
+
+        <!-- 打分区域 -->
+        <div class="card">
+            <h3>📝 提交评价</h3>
+            <div class="form-group">
+                <label>Agent ID (数字)</label>
+                <input type="number" id="agentIdInput" placeholder="例如: 1">
+            </div>
+            <div class="form-group">
+                <label>评分</label>
+                <div class="stars" id="starContainer">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>评论内容</label>
+                <textarea id="commentInput" rows="3" placeholder="这个 Agent 表现如何？"></textarea>
+            </div>
+            <button id="submitBtn" class="btn" disabled>提交评价</button>
+        </div>
+
+        <!-- 查询区域 -->
+        <div class="card">
+            <h3>🔍 查看历史评价</h3>
+            <div class="form-group">
+                <input type="number" id="queryIdInput" placeholder="输入 Agent ID 查询">
+            </div>
+            <button id="queryBtn" class="btn">查询</button>
+            <div id="reviewsList">
+                <!-- 评价列表会在这里显示 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入 Ethers.js -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
